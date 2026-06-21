@@ -277,10 +277,21 @@ function parseCSV(csvText) {
 
 async function loadData() {
   try {
-    const csvContent = await api.loadClubs();
+    const response = await fetch('./clubs.csv');
+    const csvContent = await response.text();
+    
     allClubs = parseCSV(csvContent);
-    bookmarks = await api.loadBookmarks();
-    notifications = await api.loadNotifications();
+    
+    bookmarks = JSON.parse(
+      localStorage.getItem('bookmarks') || '[]'
+    );
+    
+    notifications = JSON.parse(
+      localStorage.getItem('notification') || '[]'
+    );
+
+    console.log('클럽 수:', allclubs.length);
+
   } catch (err) {
     console.error('Data load error:', err);
   }
