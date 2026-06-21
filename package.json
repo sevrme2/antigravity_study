@@ -1,0 +1,19 @@
+{
+  "name": "ku-clubs-platform",
+  "version": "1.0.0",
+  "description": "Korea University Central Clubs Unified Platform",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "korea-university",
+    "electron",
+    "clubs"
+  ],
+  "author": "Korea University Student",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.2.0"
+  }
+}
