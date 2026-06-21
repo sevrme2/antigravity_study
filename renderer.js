@@ -58,7 +58,9 @@ let isForgotVerified = false;
 // Initialization
 async function init() {
   try {
-    users = await api.loadUsers();
+    users = JSON.parse(
+      localStorage.getItem('users') || '[]'
+    );
   } catch (err) {
     console.error('Failed to load users:', err);
     users = [];
@@ -133,7 +135,11 @@ function setupAuthEvents() {
 
     const newUser = { id: studentid, email, name, pw };
     users.push(newUser);
-    await api.saveUsers(users);
+
+    localStorage.setItem(
+      'users',
+      JSON.stringify(users)
+    );
     
     // Auto login
     currentUser = newUser;
@@ -174,7 +180,11 @@ function setupAuthEvents() {
 
     const user = users.find(u => u.email === email);
     user.pw = newPw;
-    await api.saveUsers(users);
+
+    localStorage.setItem(
+      'users',
+      JSON.stringify(users)
+    );
 
     alert('비밀번호가 성공적으로 변경되었습니다.');
     document.querySelector('.auth-link[data-target="view-login"]').click();
@@ -451,13 +461,19 @@ function renderActiveFiltersBanner() {
 
 async function toggleBookmark(e, clubId) {
   e.stopPropagation();
+  
   if (bookmarks.includes(clubId)) {
     bookmarks = bookmarks.filter(id => id !== clubId);
   } else {
     bookmarks.push(clubId);
   }
-  await api.saveBookmarks(bookmarks);
-  renderAll();
+  
+  localStorage.setItem(
+    'bookmarks',
+    JSON.stringify(bookmarks)
+  );
+  
+    renderAll();
 }
 
 function showClubModal(club) {
